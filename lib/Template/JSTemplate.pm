@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use JavaScript::V8;
+use JSON;
 
 =head1 NAME
 
@@ -49,8 +50,7 @@ open my $TMPL_CODE, "<", $path2template_js || die $!;
 $Template::JSTemplate::js_context->eval(join $/, <$TMPL_CODE>);
 close $TMPL_CODE;
 
-$Template::JSTemplate::js_context->bind(getValue    => sub{$Template::JSTemplate::value});
-$Template::JSTemplate::js_context->bind(getTemplate => sub{$Template::JSTemplate::template});
+$Template::JSTemplate::js_context->eval("var TEMPLATES = {}");
 
 sub new {
 	my $class = shift;
@@ -67,7 +67,7 @@ sub new {
 		close $TMPL;
 	}
 	my $self = bless {}, $class;
-	$self->{template} = $Template::JSTemplate::js_context->eval("new Template('$pars{template_data}')");
+	$Template::JSTemplate::js_context->eval("TEMPLATES['$self'] = new Template('$pars{template_data}')");
 	die $@ if $@;
 	$self
 }
@@ -77,6 +77,12 @@ sub new {
 =cut
 
 sub render {
+	my $self = shift;
+	my $data = to_json(shift);
+
+	my $ret = $Template::JSTemplate::js_context->eval("TEMPLATES['$self'].render($data)");
+	die $@ if $@;
+	$ret
 }
 
 =head1 AUTHOR
