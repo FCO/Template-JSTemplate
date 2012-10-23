@@ -1,21 +1,14 @@
-use 5.006;
-use strict;
-use warnings;
-use ExtUtils::MakeMaker;
+use inc::Module::Install;
 
-WriteMakefile(
-    NAME                => 'Template::JSTemplate',
-    AUTHOR              => q{Fernando Correa de Oliveira <fco@cpan.org>},
-    VERSION_FROM        => 'lib/Template/JSTemplate.pm',
-    ABSTRACT_FROM       => 'lib/Template/JSTemplate.pm',
-    ($ExtUtils::MakeMaker::VERSION >= 6.3002
-      ? ('LICENSE'=> 'perl')
-      : ()),
-    PL_FILES            => {},
-    PREREQ_PM => {
-        'Test::More'		=> 0,
-	'JavaScript::V8'	=> 0,
-    },
-    dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'Template-JSTemplate-*' },
-);
+name     'Template-JSTemplate';
+all_from 'lib/Template/JSTemplate.pm';
+author   q{Fernando Correa de Oliveira <fco@cpan.org>};
+license  'perl';
+
+build_requires 'Test::More';
+
+install_share "share";
+auto_install;
+
+WriteAll;
+
