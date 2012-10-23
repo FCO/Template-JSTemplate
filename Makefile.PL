@@ -7,7 +7,7 @@ license  'perl';
 
 build_requires 'Test::More';
 
-install_share "share";
+install_share "JSTemplate";
 auto_install;
 
 WriteAll;
