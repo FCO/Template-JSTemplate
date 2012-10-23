@@ -42,7 +42,9 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =cut
 
-my $path2template_js = "../Template-JSTemplate/JSTemplate/Template.js";
+use File::ShareDir;
+
+my $path2template_js = dist_dir("Template::JSTemplate", "JSTemplate/Template.js");
 
 $Template::JSTemplate::js_context = JavaScript::V8::Context->new();
 
