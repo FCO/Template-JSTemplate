@@ -62,13 +62,14 @@ sub new {
 	}
 
 	if($pars{template_path}) {
-		open(my $TMPL, "<", $pars{template_path}) || die $!;
+		open(my $TMPL, "<", $pars{template_path}) || die "template_path error: " . $!;
 		$pars{template_data} = join $/, <$TMPL>;
 		close $TMPL;
 	}
 	my $self = bless {}, $class;
+	$pars{template_data} =~ s{\n}{\\\n}g;
 	$Template::JSTemplate::js_context->eval("TEMPLATES['$self'] = new Template('$pars{template_data}')");
-	die $@ if $@;
+	die "Template error: " . $@ if $@;
 	$self
 }
 
