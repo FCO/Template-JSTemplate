@@ -1,3 +1,6 @@
 [submodule "JSTemplate"]
 	path = JSTemplate
 	url = https://github.com/FCO/JSTemplate.git
+[submodule "share/JSTemplate"]
+	path = share/JSTemplate
+	url = https://github.com/FCO/JSTemplate.git

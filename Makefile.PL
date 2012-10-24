@@ -5,9 +5,11 @@ all_from 'lib/Template/JSTemplate.pm';
 author   q{Fernando Correa de Oliveira <fco@cpan.org>};
 license  'perl';
 
+install_share 'share';
 build_requires 'Test::More';
+requires 'JavaScript::V8' => 0;
+requires 'File::ShareDir' => 0;
 
-install_share "JSTemplate";
 auto_install;
 
 WriteAll;
